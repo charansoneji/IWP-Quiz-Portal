@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="/stylesheets/userList.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Quiz Answers</title>
+    </head>
+
+    <body>
+
+  <div class="navbar-fixed">
+    <nav class="nav-extended nav">
+        <div class="nav-wrapper">
+            
+            <a href="#" class="brand-logo center"><img src="/images/quiz.png" alt="logo" class="custom-logo"></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="/admin">HOME</a></li>
+                <li><a href="/logout">LOGOUT</a></li>
+              </ul>
+    
+              <ul class="side-nav" id="mobile-demo">
+                  <li><a href="/admin">HOME</a></li>
+                <li><a href="/logout">LOGOUT</a></li>
+                  </ul>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a class="active" href="#tech">Technical</a></li>
+                <li class="tab"><a href="#manag">Management</a></li>
+                <li class="tab"><a href="#design">Design</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                
+<!-- Technical -->
+<div id="tech" class="col s12 scrollable">
+
+    <div class="container white-text">
+        <% var t_count=0; %>
+        <% data[0].response.forEach((obj) => { %>
+          <% if(obj.questionId.qDomain == "technical") { %>
+            <% t_count++; %>
+            <p><h5>Question 
+                <%= t_count%> 
+            </h5></p>
+            <p><%= obj.questionId.question %></p>
+        <p><h5>User Answer
+            <%= t_count%> </h5></p>
+        <p>
+        <%= obj.userSolution %>
+      </p>
+        <p><h5>Expected Answer
+                <%= t_count%> </h5></p>
+        <p>
+            <%= obj.questionId.answer %>
+        </p>
+        <% }}); %>
+        <% if (t_count==0) { %>
+        <p class="white-text">Not chosen!</p>
+        <% } %>
+    </div>
+    </div>
+
+<!-- END Technical -->
+
+
+<!-- Management -->
+<div id="manag" class="col s12 scrollable">
+
+    <div class="container white-text">
+        <% var m_count=0; %>
+        <% data[0].response.forEach((obj) => { %>
+          <% if(obj.questionId.qDomain == "management") { %>
+            <% m_count++; %>
+            <p><h5>Question
+                <%= m_count%> 
+            </h5></p>
+            <p><%= obj.questionId.question %></p>
+            <p><h5>User Answer
+                <%= m_count%> </h5></p>
+            <p>
+               <% obj.userSolution %>
+            </p>
+        <p><h5>Expected Answer
+                <%= m_count%> 
+        </h5></p>
+        <p>
+            <%= obj.questionId.answer %>
+        </p>
+        <% }}); %>
+        <% if (m_count==0) { %>
+        <p class="white-text">Not chosen!</p>
+        <% } %>
+    </div>
+
+    </div>
+    
+<!-- END Management -->
+
+<!-- Design -->
+<div id="design" class="col s12 scrollable">
+
+    <div class="container white-text">
+        <% var d_count=0; %>
+        
+
+
+
+        <% data[0].response.forEach((obj) => { %>
+          <% if(obj.questionId.qDomain == "design") { %>
+            <% d_count++; %>
+            <p><h5>Question
+                <%= d_count%>
+            </h5></p>
+            <p><%= obj.questionId.question %></p>
+            <p><h5>User Answer
+                <%= d_count%> </h5></p>
+            <p>
+                <% obj.userSolution %>
+          </p>
+        <p><h5>Expected Answer
+                <%= d_count%>
+        </h5></p>
+        <p>
+            <%= obj.questionId.answer %>
+        </p>
+        <% }}); %>
+        <% if (d_count==0) { %>
+        <p class="white-text">Not chosen!</p>
+        <% } %>
+    </div>
+  
+      </div>
+<!-- END Design -->
+                
+
+
+<footer class="page-footer myfooter">
+        <div class="container">
+            <a class="waves-effect waves-light btn modal-trigger green black-text " href="#dmodal1">ACCEPT</a>
+            <div id="dmodal1" class="modal indigo lighten-5">
+            <div class="modal-content">
+            <p>Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer indigo lighten-5">
+                    <a id="approved" onclick="submit1()" href="/admin" class="modal-close waves-effect waves-green btn-flat" value="approved">YES</a>
+            </div>
+            </div>
+            
+            
+            <a class="waves-effect waves-light btn modal-trigger  yellow darken-1 black-text" href="#dmodal2">HOLD</a>
+            <div id="dmodal2" class="modal indigo lighten-5">
+            <div class="modal-content">
+              <p>Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer indigo lighten-5">
+              <a id="hold" onclick="submit2()" href="/admin" class="modal-close waves-effect waves-green btn-flat" value="hold">YES</a>
+            </div>
+            </div>
+                
+            
+            <a class="waves-effect waves-light btn modal-trigger red black-text " href="#dmodal3">REJECT</a>
+            <div id="dmodal3" class="modal indigo lighten-5">
+            <div class="modal-content ">      
+            <p>Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer indigo lighten-5">
+            <a id="reject" onclick="submit3()" href="/admin" class="modal-close waves-effect waves-green btn-flat" value="reject">YES</a>
+            </div>
+            </div>
+            
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        
+      </footer>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+      <script>
+         $(document).ready(function(){
+         $('.collapsible').collapsible();
+         });
+
+        $(document).ready(function(){
+    $('.modal').modal();
+  });
+  $(document).ready(function(){
+    
+    $(".button-collapse").sideNav();
+    $('.parallax').parallax();
+
+});
+
+$(document).ready(function () {
+            $('.tabs').tabs();
+});
+
+
+    function submit1() {
+    console.log("<%= data[0].regno %>");
+    var status= "approved";
+    console.log(status);
+      
+      $.ajax({
+        url: "/admin/userData/<%= data[0].regno %>",
+        method: "POST",
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded",
+        data: {status: status},
+        success: function (res) {
+          if (res.success == true) {
+            console.log("Done!");
+          }
+        },
+        error: function (msg) {
+          console.log(msg);
+        }
+      });
+    }
+
+    function submit2() {
+    console.log("<%= data[0].regno %>");
+    var status= "hold";
+    console.log(status);
+      
+      $.ajax({
+        url: "/admin/userData/<%= data[0].regno %>",
+        method: "POST",
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded",
+        data: {status: status},
+        success: function (res) {
+          if (res.success == true) {
+            console.log("Done!");
+          }
+        },
+        error: function (msg) {
+          console.log(msg);
+        }
+      });
+    }
+
+    function submit3() {
+    console.log("<%= data[0].regno %>");
+    var status= "reject";
+    console.log(status);
+      
+      $.ajax({
+        url: "/admin/userData/<%= data[0].regno %>",
+        method: "POST",
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded",
+        data: {status: status},
+        success: function (res) {
+          if (res.success == true) {
+            console.log("Done!");
+          }
+        },
+        error: function (msg) {
+          console.log(msg);
+        }
+      });
+    }
+      
+      </script>
+
+
+    </body>
+</html>

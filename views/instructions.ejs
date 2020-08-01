@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/instructions.css" />
+    <title>Ready for your test?</title>
+  </head>
+
+  <body>
+    <div id="cover"></div>
+    <script>
+      $(window).on("load", function() {
+        $("#cover").fadeOut(200);
+      });
+    </script>
+    <div class="container">
+      <div class="row">
+        <div class="col12 top">
+          <img src="/images/quiz.png" alt="logo" class="logo" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col12">
+          <div class="info">
+            <h4>Welcome <%=user.name%>!</h4>
+            <h4>Instructions</h4>
+            <p>
+              1) Select your domains. You will be given 10 minutes for each
+              domain you select below, to complete the quiz. That's all we need
+              from your side. Leave the rest to us. <br />2) Do not attempt to
+              go back or refresh the page. It will be assumed that you have
+              attempted the quiz and you will not be allowed to give further
+              responses. <br />3) Your answers (from the quiz) will be recorded
+              and evaluated. Depending upon the said evaluation, we will
+              shortlist and call the selected students for the next round of
+              recruitment.
+
+              <b>All the best, may the force be with you</b>
+            </p>
+            <form action="" id="domain-choice">
+              <div>
+                <p>
+                  <label>
+                    <input
+                      id="indeterminate-checkbox"
+                      type="checkbox"
+                      value="technical"
+                      class="t"
+                      disabled
+                    />
+                    <span>Technical</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input
+                      id="indeterminate-checkbox"
+                      type="checkbox"
+                      value="management"
+                      class="m"
+                    />
+                    <span>Management(MCQs)</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input
+                      id="indeterminate-checkbox"
+                      type="checkbox"
+                      value="design"
+                      class="d"
+                      disabled
+                    />
+                    <span>Design</span>
+                  </label>
+                </p>
+              </div>
+              <span class="button-placement">
+                <a
+                  id="begin"
+                  class="waves-effect waves btn-flat custom-button"
+                  onclick="displayDomains()"
+                  >Begin Quiz</a
+                >
+              </span>
+            </form>
+            <span class="button-placement">
+              <a class="waves-effect waves btn-flat custom-button2" href="/"
+                >Logout</a
+              >
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+  <script>
+    // var selected = ['test', ];
+    $(document).ready(function() {
+      console.log("here");
+
+      // var management = $('.m').val();
+      // var design = $('.d').val();
+    });
+
+    function displayDomains() {
+      var domain = [];
+      $("#begin").prop("disabled", true);
+      console.log("Hello");
+      if ($(".t").is(":checked")) {
+        console.log("hello");
+        var technical = $(".t").val();
+        domain.push(technical);
+      }
+
+      if ($(".m").is(":checked")) {
+        console.log("hello");
+        var management = $(".m").val();
+        domain.push(management);
+      }
+
+      if ($(".d").is(":checked")) {
+        var design = $(".d").val();
+        domain.push(design);
+      }
+      var numOfDom = domain.length;
+      console.log(numOfDom);
+      if (numOfDom > 0) {
+        $.ajax({
+          url: "/domain",
+          method: "POST",
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded",
+          data: {
+            domain: domain
+          },
+          success: function(question) {
+            window.location.href = "/question";
+          },
+          error: function(msg) {
+            console.log(msg);
+            $("#begin").prop("disabled", false);
+          }
+        });
+      } else {
+        $("#begin").prop("disabled", false);
+        alert("Please Select a Domain!");
+      }
+    }
+  </script>
+</html>
